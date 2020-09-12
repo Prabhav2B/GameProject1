@@ -14,6 +14,7 @@ public class Dummy_2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.A))
+            Debug.Log("New Feature!");
     }
 }
