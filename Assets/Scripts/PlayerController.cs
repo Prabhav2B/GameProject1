@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
     [Range(0.0f, 5.0f)]
     public float timeToFullyStop = .5f;
 
+    [Range(0.0f, 5.0f)]
+    public float gravityScale = .5f;
+
 
 
     Rigidbody2D rb;
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0f;
         dirX = 0f;
         dirY = 0f;
         movementTimerX = 0f;
@@ -87,10 +91,15 @@ public class PlayerController : MonoBehaviour
         //Come to rest after a decay
         else
         {
-            previousX = InputX;
+            if (previousX != 0)
+            {
+                movementTimerX = (movementTimerX / timeToReachFullSpeed) * timeToFullyStop;
+                previousX = InputX;
+            }
 
             movementTimerX -= Time.fixedDeltaTime;
             movementTimerX = Mathf.Clamp(movementTimerX, 0f, timeToFullyStop);
+            
             curveValue = movementDecayCurve.Evaluate(movementTimerX / timeToFullyStop);
 
             dirX = 
@@ -120,7 +129,11 @@ public class PlayerController : MonoBehaviour
         //Come to rest after a decay
         else
         {
-            previousY = InputY;
+            if (previousY != 0)
+            {
+                movementTimerY = (movementTimerY / timeToReachFullSpeed) * timeToFullyStop;
+                previousY = InputY;
+            }
 
             movementTimerY -= Time.fixedDeltaTime;
             movementTimerY = Mathf.Clamp(movementTimerY, 0f, timeToFullyStop);
@@ -134,7 +147,7 @@ public class PlayerController : MonoBehaviour
 
 
         Walk(new Vector2(dirX, dirY));
-
+        rb.velocity += Vector2.down * gravityScale;
         
 
     }
@@ -144,7 +157,6 @@ public class PlayerController : MonoBehaviour
         dir = Vector3.ClampMagnitude(dir, 1f);
         // Vector3.Normalize(dir);
         rb.velocity = dir * movementSpeed;
-
         //rb.AddForce(dir * movementSpeed, ForceMode2D.Force);
 
     }

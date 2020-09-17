@@ -364,9 +364,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  movementSpeed: 10
-  timeToReachFullSpeed: 1.13
-  timeToFullyStop: 1.18
+  movementSpeed: 5
+  timeToReachFullSpeed: 0.5
+  timeToFullyStop: 2.48
+  gravityScale: 0
 --- !u!58 &974586848
 CircleCollider2D:
   m_ObjectHideFlags: 0
