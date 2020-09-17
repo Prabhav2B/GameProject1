@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [Space(15)]
 
 
-    [Range(.1f, 2f)]
+    [Range(.1f, 10f)]
     public float movementSpeed = 10;
 
     [Range(0.0f, 5.0f)]
@@ -40,8 +40,6 @@ public class PlayerController : MonoBehaviour
 
     public float InputX { get; private set; }
     public float InputY { get; private set; }
-
-
 
     void Start()
     {
@@ -66,7 +64,7 @@ public class PlayerController : MonoBehaviour
     {
         //Value evaluated from Movement Curves
         float curveValue = 0;
-
+        
 
         if (InputX != 0)
         {
@@ -81,7 +79,8 @@ public class PlayerController : MonoBehaviour
 
             curveValue = movementCurve.Evaluate(movementTimerX / timeToReachFullSpeed);
 
-            dirX = curveValue * InputX;
+            dirX += curveValue * InputX;
+            dirX = Mathf.Clamp(dirX, -1f, 1f);
 
 
         }
@@ -96,23 +95,32 @@ public class PlayerController : MonoBehaviour
 
             dirX = 
                 rb.velocity.x != 0 ? curveValue * (rb.velocity.x / Mathf.Abs(rb.velocity.x)) : InputX;
+            dirX = Mathf.Clamp(dirX, -1f, 1f);
 
         }
 
         if (InputY != 0)
         {
+            if (previousY != InputY)
+            {
+                movementTimerY = 0f;
+                previousY = InputY;
+                
+            }
 
             movementTimerY += Time.fixedDeltaTime;
             movementTimerY = Mathf.Clamp(movementTimerY, 0f, timeToReachFullSpeed);
 
             curveValue = movementCurve.Evaluate(movementTimerY / timeToReachFullSpeed);
 
-            dirY =  curveValue * InputY;
+            dirY +=  curveValue * InputY;
+            dirY = Mathf.Clamp(dirY, -1f, 1f);
 
         }
         //Come to rest after a decay
         else
         {
+            previousY = InputY;
 
             movementTimerY -= Time.fixedDeltaTime;
             movementTimerY = Mathf.Clamp(movementTimerY, 0f, timeToFullyStop);
@@ -120,17 +128,24 @@ public class PlayerController : MonoBehaviour
 
             dirY =
                 rb.velocity.y != 0 ? curveValue * (rb.velocity.y / Mathf.Abs(rb.velocity.y)) : InputY;
+            dirY = Mathf.Clamp(dirY, -1f, 1f);
 
         }
 
+
         Walk(new Vector2(dirX, dirY));
+
+        
 
     }
 
     private void Walk(Vector2 dir)
     {
-        Vector3.ClampMagnitude(dir, 1f);
+        dir = Vector3.ClampMagnitude(dir, 1f);
         // Vector3.Normalize(dir);
-        rb.velocity = new Vector2(dir.x * movementSpeed, dir.y * movementSpeed);
+        rb.velocity = dir * movementSpeed;
+
+        //rb.AddForce(dir * movementSpeed, ForceMode2D.Force);
+
     }
 }
