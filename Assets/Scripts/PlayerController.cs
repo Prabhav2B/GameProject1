@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -7,14 +6,14 @@ public class PlayerController : MonoBehaviour
 
     #region Variables
 
-    [Space(15)]
+    [Space(20)]
 
     //Visual Representation of player Velocity
     public AnimationCurve movementCurve = new AnimationCurve();
-    [Space(5)]
+    [Space(8)]
     public AnimationCurve movementDecayCurve = new AnimationCurve();
 
-    [Space(15)]
+    [Space(20)]
 
 
     [Range(.1f, 10f)]
@@ -31,14 +30,14 @@ public class PlayerController : MonoBehaviour
 
 
 
-    Rigidbody2D rb;
-    float dirX;
-    float dirY;
-    float movementTimerX;
-    float movementTimerY;
-
-    float previousX;
-    float previousY;
+    private Rigidbody2D rb;
+    private Vector2 dir;
+    private float movementTimerX;
+    private float movementTimerY;
+    
+    private float previousX;
+    private float previousY;
+    private bool thisWillFixShit; //thisWillFixShit
     #endregion
 
     public float InputX { get; private set; }
@@ -47,13 +46,20 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0f;
-        dirX = 0f;
-        dirY = 0f;
+            
+        dir.x = 0f;
+        dir.y = 0f;
         movementTimerX = 0f;
         movementTimerY = 0f;
+        
         previousX = 0f;
         previousY = 0f;
+
+        if (rb.gravityScale != 0f)
+        {
+            Debug.Break();
+            throw new System.Exception("Kindly change gravity scale on Movement script only! Contact Pr0b0b for help.");
+        }
     }
 
     private void Update()
@@ -61,14 +67,12 @@ public class PlayerController : MonoBehaviour
         //Gets Raw Axis Values : 1, 0, or -1
         InputX = Input.GetAxisRaw("Horizontal");
         InputY = Input.GetAxisRaw("Vertical");
-
     }
 
     void FixedUpdate()
     {
         //Value evaluated from Movement Curves
         float curveValue = 0;
-        
 
         if (InputX != 0)
         {
@@ -83,8 +87,8 @@ public class PlayerController : MonoBehaviour
 
             curveValue = movementCurve.Evaluate(movementTimerX / timeToReachFullSpeed);
 
-            dirX += curveValue * InputX;
-            dirX = Mathf.Clamp(dirX, -1f, 1f);
+            dir.x += curveValue * InputX;
+            dir.x = Mathf.Clamp(dir.x, -1f, 1f);
 
 
         }
@@ -102,9 +106,8 @@ public class PlayerController : MonoBehaviour
             
             curveValue = movementDecayCurve.Evaluate(movementTimerX / timeToFullyStop);
 
-            dirX = 
-                rb.velocity.x != 0 ? curveValue * (rb.velocity.x / Mathf.Abs(rb.velocity.x)) : InputX;
-            dirX = Mathf.Clamp(dirX, -1f, 1f);
+            dir.x = !Mathf.Approximately(curveValue, 0f) ? curveValue * (rb.velocity.x > 0 ? 1 : -1) : 0;
+            dir.x = Mathf.Clamp(dir.x, -1f, 1f);
 
         }
 
@@ -112,6 +115,7 @@ public class PlayerController : MonoBehaviour
         {
             if (previousY != InputY)
             {
+                dir.y = 0f;
                 movementTimerY = 0f;
                 previousY = InputY;
                 
@@ -122,8 +126,8 @@ public class PlayerController : MonoBehaviour
 
             curveValue = movementCurve.Evaluate(movementTimerY / timeToReachFullSpeed);
 
-            dirY +=  curveValue * InputY;
-            dirY = Mathf.Clamp(dirY, -1f, 1f);
+            dir.y +=  curveValue * InputY;
+            dir.y = Mathf.Clamp(dir.y, -1f, 1f);
 
         }
         //Come to rest after a decay
@@ -133,31 +137,33 @@ public class PlayerController : MonoBehaviour
             {
                 movementTimerY = (movementTimerY / timeToReachFullSpeed) * timeToFullyStop;
                 previousY = InputY;
+                thisWillFixShit = rb.velocity.y > 0;
             }
 
             movementTimerY -= Time.fixedDeltaTime;
             movementTimerY = Mathf.Clamp(movementTimerY, 0f, timeToFullyStop);
-            curveValue = movementDecayCurve.Evaluate(movementTimerY / timeToFullyStop);
+            curveValue =  movementDecayCurve.Evaluate(movementTimerY / timeToFullyStop);
 
-            dirY =
-                rb.velocity.y != 0 ? curveValue * (rb.velocity.y / Mathf.Abs(rb.velocity.y)) : InputY;
-            dirY = Mathf.Clamp(dirY, -1f, 1f);
+            dir.y = !Mathf.Approximately(curveValue, 0f) ? curveValue * ( thisWillFixShit ? 1 : -1) : 0;
+            dir.y = Mathf.Clamp(dir.y, -1f, 1f);
+
+            //make add flags to check whem movement stops and adjust gravity accordingly
 
         }
 
-
-        Walk(new Vector2(dirX, dirY));
-        rb.velocity += Vector2.down * gravityScale;
+        rb.velocity = (Walk(dir) * movementSpeed + ApplyGravity()) ;
         
 
     }
 
-    private void Walk(Vector2 dir)
-    {
-        dir = Vector3.ClampMagnitude(dir, 1f);
-        // Vector3.Normalize(dir);
-        rb.velocity = dir * movementSpeed;
-        //rb.AddForce(dir * movementSpeed, ForceMode2D.Force);
+    private Vector2 ApplyGravity()
+    { 
+        return( Vector2.down * gravityScale );
+    }
 
+    private Vector2 Walk(Vector2 dir)
+    {
+        dir = Vector2.ClampMagnitude(dir, 1f);
+        return(dir);
     }
 }
