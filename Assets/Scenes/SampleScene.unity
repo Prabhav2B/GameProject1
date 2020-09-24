@@ -366,8 +366,10 @@ MonoBehaviour:
     m_RotationOrder: 4
   movementSpeed: 5
   timeToReachFullSpeed: 0.5
+
   timeToFullyStop: 4
   gravityScale: 0.5
+
 --- !u!58 &974586848
 CircleCollider2D:
   m_ObjectHideFlags: 0
