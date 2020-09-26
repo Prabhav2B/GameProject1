@@ -43,10 +43,15 @@ public class PlayerController : MonoBehaviour
     public float InputX { get; private set; }
     public float InputY { get; private set; }
 
+    DeathController dc;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-            
+        dc = GetComponent<DeathController>();
+
+        dc.OnDeath += KillVelocity;
+
         dir.x = 0f;
         dir.y = 0f;
         movementTimerX = 0f;
@@ -166,4 +171,21 @@ public class PlayerController : MonoBehaviour
         dir = Vector2.ClampMagnitude(dir, 1f);
         return(dir);
     }
+
+    private void KillVelocity()
+    {
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+
+        dir.x = 0f;
+        dir.y = 0f;
+        movementTimerX = 0f;
+        movementTimerY = 0f;
+
+        previousX = 0f;
+        previousY = 0f;
+
+        thisWillFixShit = false; //FIX THIS
+    }
+    
 }
