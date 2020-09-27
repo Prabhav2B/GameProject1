@@ -14,7 +14,11 @@ TagManager:
   - 
   - 
   - Level
+<<<<<<< HEAD
   - KillPlayer
+=======
+  - Player
+>>>>>>> level_dev
   - 
   - 
   - 
