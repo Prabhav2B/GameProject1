@@ -97,7 +97,10 @@ public class PlayerController : MonoBehaviour
                 {
                     movementTimer[i] = (movementTimer[i] / movementSettings.timeToReachFullSpeed) * movementSettings.timeToFullyStop;
                     previousDir[i] = PlayerInput[i];
-                    thisWillFixShit = rb.velocity[i] > 0;
+                   
+                    //hacky fix
+                    if(i == 1)
+                        thisWillFixShit = rb.velocity[i] > 0;
                 }
 
                 movementTimer[i] -= Time.fixedDeltaTime;
@@ -105,7 +108,15 @@ public class PlayerController : MonoBehaviour
 
                 curveValue = movementDecayCurve.Evaluate(movementTimer[i] / movementSettings.timeToFullyStop);
 
-                dir[i] = !Mathf.Approximately(curveValue, 0f) ? curveValue * (thisWillFixShit ? 1 : -1) : 0;
+                //hacky fix
+                if (i == 1)
+                    dir[i] = !Mathf.Approximately(curveValue, 0f) ? curveValue * (thisWillFixShit ? 1 : -1) : 0;
+                else
+                    dir[i] = !Mathf.Approximately(curveValue, 0f) ? curveValue * (rb.velocity.x > 0 ? 1 : -1) : 0;
+
+                
+
+
                 dir[i] = Mathf.Clamp(dir[i], -1f, 1f);
 
             }
