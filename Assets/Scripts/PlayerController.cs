@@ -19,15 +19,13 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 dir;
-    private float movementTimerX;
-    private float movementTimerY;
-    
-    private float previousX;
-    private float previousY;
+
+    private Vector2 movementTimer;
+
+    private Vector2 previousDir;
     private bool thisWillFixShit; //thisWillFixShit
 
-    public float InputX { get; private set; }
-    public float InputY { get; private set; }
+    public Vector2 PlayerInput { get; private set; }
 
     DeathController dc;
 
@@ -41,13 +39,10 @@ public class PlayerController : MonoBehaviour
         //Subscribing KillVelocity function to OnDeath Event
         dc.OnDeath += KillVelocity;
 
-        dir.x = 0f;
-        dir.y = 0f;
-        movementTimerX = 0f;
-        movementTimerY = 0f;
-        
-        previousX = 0f;
-        previousY = 0f;
+        dir = Vector2.zero;
+
+        movementTimer = Vector2.zero;
+        previousDir = Vector2.zero;
 
         thisWillFixShit = false;
 
@@ -61,8 +56,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         //Gets Raw Axis Values : 1, 0, or -1
-        InputX = Input.GetAxisRaw("Horizontal");
-        InputY = Input.GetAxisRaw("Vertical");
+        PlayerInput = new Vector2 (Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
     }
 
     void FixedUpdate()
@@ -70,90 +64,51 @@ public class PlayerController : MonoBehaviour
         //Value evaluated from Movement Curves
         float curveValue = 0;
 
-        if (InputX != 0)
+        for (int i = 0; i < 2; i++)
         {
-            if (previousX != InputX)
+            if (PlayerInput[i] != 0)
             {
-                float tempDir = rb.velocity.x > 0 ? 1 : -1;
+                if (previousDir[i] != PlayerInput[i])
+                {
+                    float tempDir = rb.velocity[i] > 0 ? 1 : -1;
 
-                if (tempDir == InputX)
-                    movementTimerX = (movementTimerX / movementSettings.timeToFullyStop) * movementSettings.timeToReachFullSpeed;
-                else
-                    movementTimerX = 0f;
+                    if (tempDir == PlayerInput[i])
+                        movementTimer[i] = (movementTimer[i] / movementSettings.timeToFullyStop) * movementSettings.timeToReachFullSpeed;
+                    else
+                        movementTimer[i] = 0f;
 
-                previousX = InputX;
+                    previousDir[i] = PlayerInput[i];
+                }
+
+                movementTimer[i] += Time.fixedDeltaTime;
+                movementTimer[i] = Mathf.Clamp(movementTimer[i], 0f, movementSettings.timeToReachFullSpeed);
+
+                curveValue = movementCurve.Evaluate(movementTimer[i] / movementSettings.timeToReachFullSpeed);
+
+                dir[i] += curveValue * PlayerInput[i];
+                dir[i] = Mathf.Clamp(dir[i], -1f, 1f);
+
+
             }
-
-            movementTimerX += Time.fixedDeltaTime;
-            movementTimerX = Mathf.Clamp(movementTimerX, 0f, movementSettings.timeToReachFullSpeed);
-
-            curveValue = movementCurve.Evaluate(movementTimerX / movementSettings.timeToReachFullSpeed);
-
-            dir.x += curveValue * InputX;
-            dir.x = Mathf.Clamp(dir.x, -1f, 1f);
-
-
-        }
-        //Come to rest after a decay
-        else
-        {
-            if (previousX != 0)
+            //Come to rest after a decay
+            else
             {
-                movementTimerX = (movementTimerX / movementSettings.timeToReachFullSpeed) * movementSettings.timeToFullyStop;
-                previousX = InputX;
+                if (previousDir[i] != 0)
+                {
+                    movementTimer[i] = (movementTimer[i] / movementSettings.timeToReachFullSpeed) * movementSettings.timeToFullyStop;
+                    previousDir[i] = PlayerInput[i];
+                    thisWillFixShit = rb.velocity[i] > 0;
+                }
+
+                movementTimer[i] -= Time.fixedDeltaTime;
+                movementTimer[i] = Mathf.Clamp(movementTimer[i], 0f, movementSettings.timeToFullyStop);
+
+                curveValue = movementDecayCurve.Evaluate(movementTimer[i] / movementSettings.timeToFullyStop);
+
+                dir[i] = !Mathf.Approximately(curveValue, 0f) ? curveValue * (thisWillFixShit ? 1 : -1) : 0;
+                dir[i] = Mathf.Clamp(dir[i], -1f, 1f);
+
             }
-
-            movementTimerX -= Time.fixedDeltaTime;
-            movementTimerX = Mathf.Clamp(movementTimerX, 0f, movementSettings.timeToFullyStop);
-            
-            curveValue = movementDecayCurve.Evaluate(movementTimerX / movementSettings.timeToFullyStop);
-
-            dir.x = !Mathf.Approximately(curveValue, 0f) ? curveValue * (rb.velocity.x > 0 ? 1 : -1) : 0;
-            dir.x = Mathf.Clamp(dir.x, -1f, 1f);
-
-        }
-
-        if (InputY != 0)
-        {
-            if (previousY != InputY)
-            {
-                float tempDir = rb.velocity.y > 0 ? 1 : -1;
-
-                if (tempDir == InputY)
-                    movementTimerY = (movementTimerY / movementSettings.timeToFullyStop) * movementSettings.timeToReachFullSpeed;
-                else
-                    movementTimerY = 0f;
-                previousY = InputY;
-                
-            }
-
-            movementTimerY += Time.fixedDeltaTime;
-            movementTimerY = Mathf.Clamp(movementTimerY, 0f, movementSettings.timeToReachFullSpeed);
-
-            curveValue = movementCurve.Evaluate(movementTimerY / movementSettings.timeToReachFullSpeed);
-
-            dir.y +=  curveValue * InputY;
-            dir.y = Mathf.Clamp(dir.y, -1f, 1f);
-
-        }
-        //Come to rest after a decay
-        else
-        {
-            if (previousY != 0)
-            {
-                movementTimerY = (movementTimerY / movementSettings.timeToReachFullSpeed) * movementSettings.timeToFullyStop;
-                previousY = InputY;
-                thisWillFixShit = rb.velocity.y > 0;
-            }
-
-            movementTimerY -= Time.fixedDeltaTime;
-            movementTimerY = Mathf.Clamp(movementTimerY, 0f, movementSettings.timeToFullyStop);
-            curveValue =  movementDecayCurve.Evaluate(movementTimerY / movementSettings.timeToFullyStop);
-
-            dir.y = !Mathf.Approximately(curveValue, 0f) ? curveValue * ( thisWillFixShit ? 1 : -1) : 0;
-            dir.y = Mathf.Clamp(dir.y, -1f, 1f);
-
-            //make add flags to check whem movement stops and adjust gravity accordingly
 
         }
 
@@ -163,7 +118,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 ApplyGravity()
     { 
-        return( Vector2.down * movementSettings.gravityScale);
+        return( Vector2.down * movementSettings.gravityScale );
     }
 
     private Vector2 Walk(Vector2 dir)
@@ -177,13 +132,9 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0f;
 
-        dir.x = 0f;
-        dir.y = 0f;
-        movementTimerX = 0f;
-        movementTimerY = 0f;
-
-        previousX = 0f;
-        previousY = 0f;
+        dir = Vector2.zero;
+        movementTimer = Vector2.zero;
+        previousDir = Vector2.zero;
 
         thisWillFixShit = false; //FIX THIS
     }
