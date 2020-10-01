@@ -28,8 +28,6 @@ public class PlayerController : MonoBehaviour
     [Range(0.0f, 5.0f)]
     public float gravityScale = .5f;
 
-
-
     private Rigidbody2D rb;
     private Vector2 dir;
     private float movementTimerX;
@@ -38,18 +36,20 @@ public class PlayerController : MonoBehaviour
     private float previousX;
     private float previousY;
     private bool thisWillFixShit; //thisWillFixShit
-    #endregion
 
     public float InputX { get; private set; }
     public float InputY { get; private set; }
 
     DeathController dc;
 
+    #endregion
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         dc = GetComponent<DeathController>();
 
+        //Subscribing KillVelocity function to OnDeath Event
         dc.OnDeath += KillVelocity;
 
         dir.x = 0f;
@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour
         
         previousX = 0f;
         previousY = 0f;
+
+        thisWillFixShit = false;
 
         if (rb.gravityScale != 0f)
         {
@@ -83,7 +85,13 @@ public class PlayerController : MonoBehaviour
         {
             if (previousX != InputX)
             {
-                movementTimerX = 0f;
+                float tempDir = rb.velocity.x > 0 ? 1 : -1;
+
+                if (tempDir == InputX)
+                    movementTimerX = (movementTimerX / timeToFullyStop) * timeToReachFullSpeed;
+                else
+                    movementTimerX = 0f;
+
                 previousX = InputX;
             }
 
@@ -120,8 +128,12 @@ public class PlayerController : MonoBehaviour
         {
             if (previousY != InputY)
             {
-                dir.y = 0f;
-                movementTimerY = 0f;
+                float tempDir = rb.velocity.y > 0 ? 1 : -1;
+
+                if (tempDir == InputY)
+                    movementTimerY = (movementTimerY / timeToFullyStop) * timeToReachFullSpeed;
+                else
+                    movementTimerY = 0f;
                 previousY = InputY;
                 
             }
@@ -157,8 +169,7 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.velocity = (Walk(dir) * movementSpeed + ApplyGravity()) ;
-        
-
+       
     }
 
     private Vector2 ApplyGravity()

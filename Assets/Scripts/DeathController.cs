@@ -4,7 +4,7 @@ using UnityEngine;
 public class DeathController : MonoBehaviour
 {
     [SerializeField] private Transform respawnTransform;
-    [SerializeField] LayerMask killPlayer = 1 >> 9;
+    [SerializeField] int killPlayerLayer = 9;
 
     public Transform RespawnTransform { private get { return respawnTransform; } set { respawnTransform = value; } }
     
@@ -13,7 +13,7 @@ public class DeathController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 9)
+        if (collision.gameObject.layer == killPlayerLayer)
         {
             this.transform.position = respawnTransform.position;
             OnDeath();
