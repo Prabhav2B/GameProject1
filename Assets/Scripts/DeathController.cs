@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DeathController : MonoBehaviour
 {
@@ -15,7 +14,7 @@ public class DeathController : MonoBehaviour
     {
         if (collision.gameObject.layer == killPlayerLayer)
         {
-            this.transform.position = respawnTransform.position;
+            this.transform.position = RespawnTransform.position;
             OnDeath();
         }
     }
