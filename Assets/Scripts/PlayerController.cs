@@ -15,18 +15,7 @@ public class PlayerController : MonoBehaviour
 
     [Space(20)]
 
-
-    [Range(.1f, 10f)]
-    public float movementSpeed = 10;
-
-    [Range(0.0f, 5.0f)]
-    public float timeToReachFullSpeed = .5f;
-
-    [Range(0.0f, 5.0f)]
-    public float timeToFullyStop = .5f;
-
-    [Range(0.0f, 5.0f)]
-    public float gravityScale = .5f;
+    public PlayerMovementSettings movementSettings;
 
     private Rigidbody2D rb;
     private Vector2 dir;
@@ -88,7 +77,7 @@ public class PlayerController : MonoBehaviour
                 float tempDir = rb.velocity.x > 0 ? 1 : -1;
 
                 if (tempDir == InputX)
-                    movementTimerX = (movementTimerX / timeToFullyStop) * timeToReachFullSpeed;
+                    movementTimerX = (movementTimerX / movementSettings.timeToFullyStop) * movementSettings.timeToReachFullSpeed;
                 else
                     movementTimerX = 0f;
 
@@ -96,9 +85,9 @@ public class PlayerController : MonoBehaviour
             }
 
             movementTimerX += Time.fixedDeltaTime;
-            movementTimerX = Mathf.Clamp(movementTimerX, 0f, timeToReachFullSpeed);
+            movementTimerX = Mathf.Clamp(movementTimerX, 0f, movementSettings.timeToReachFullSpeed);
 
-            curveValue = movementCurve.Evaluate(movementTimerX / timeToReachFullSpeed);
+            curveValue = movementCurve.Evaluate(movementTimerX / movementSettings.timeToReachFullSpeed);
 
             dir.x += curveValue * InputX;
             dir.x = Mathf.Clamp(dir.x, -1f, 1f);
@@ -110,14 +99,14 @@ public class PlayerController : MonoBehaviour
         {
             if (previousX != 0)
             {
-                movementTimerX = (movementTimerX / timeToReachFullSpeed) * timeToFullyStop;
+                movementTimerX = (movementTimerX / movementSettings.timeToReachFullSpeed) * movementSettings.timeToFullyStop;
                 previousX = InputX;
             }
 
             movementTimerX -= Time.fixedDeltaTime;
-            movementTimerX = Mathf.Clamp(movementTimerX, 0f, timeToFullyStop);
+            movementTimerX = Mathf.Clamp(movementTimerX, 0f, movementSettings.timeToFullyStop);
             
-            curveValue = movementDecayCurve.Evaluate(movementTimerX / timeToFullyStop);
+            curveValue = movementDecayCurve.Evaluate(movementTimerX / movementSettings.timeToFullyStop);
 
             dir.x = !Mathf.Approximately(curveValue, 0f) ? curveValue * (rb.velocity.x > 0 ? 1 : -1) : 0;
             dir.x = Mathf.Clamp(dir.x, -1f, 1f);
@@ -131,7 +120,7 @@ public class PlayerController : MonoBehaviour
                 float tempDir = rb.velocity.y > 0 ? 1 : -1;
 
                 if (tempDir == InputY)
-                    movementTimerY = (movementTimerY / timeToFullyStop) * timeToReachFullSpeed;
+                    movementTimerY = (movementTimerY / movementSettings.timeToFullyStop) * movementSettings.timeToReachFullSpeed;
                 else
                     movementTimerY = 0f;
                 previousY = InputY;
@@ -139,9 +128,9 @@ public class PlayerController : MonoBehaviour
             }
 
             movementTimerY += Time.fixedDeltaTime;
-            movementTimerY = Mathf.Clamp(movementTimerY, 0f, timeToReachFullSpeed);
+            movementTimerY = Mathf.Clamp(movementTimerY, 0f, movementSettings.timeToReachFullSpeed);
 
-            curveValue = movementCurve.Evaluate(movementTimerY / timeToReachFullSpeed);
+            curveValue = movementCurve.Evaluate(movementTimerY / movementSettings.timeToReachFullSpeed);
 
             dir.y +=  curveValue * InputY;
             dir.y = Mathf.Clamp(dir.y, -1f, 1f);
@@ -152,14 +141,14 @@ public class PlayerController : MonoBehaviour
         {
             if (previousY != 0)
             {
-                movementTimerY = (movementTimerY / timeToReachFullSpeed) * timeToFullyStop;
+                movementTimerY = (movementTimerY / movementSettings.timeToReachFullSpeed) * movementSettings.timeToFullyStop;
                 previousY = InputY;
                 thisWillFixShit = rb.velocity.y > 0;
             }
 
             movementTimerY -= Time.fixedDeltaTime;
-            movementTimerY = Mathf.Clamp(movementTimerY, 0f, timeToFullyStop);
-            curveValue =  movementDecayCurve.Evaluate(movementTimerY / timeToFullyStop);
+            movementTimerY = Mathf.Clamp(movementTimerY, 0f, movementSettings.timeToFullyStop);
+            curveValue =  movementDecayCurve.Evaluate(movementTimerY / movementSettings.timeToFullyStop);
 
             dir.y = !Mathf.Approximately(curveValue, 0f) ? curveValue * ( thisWillFixShit ? 1 : -1) : 0;
             dir.y = Mathf.Clamp(dir.y, -1f, 1f);
@@ -168,13 +157,13 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        rb.velocity = (Walk(dir) * movementSpeed + ApplyGravity()) ;
+        rb.velocity = (Walk(dir) * movementSettings.movementSpeed + ApplyGravity()) ;
        
     }
 
     private Vector2 ApplyGravity()
     { 
-        return( Vector2.down * gravityScale );
+        return( Vector2.down * movementSettings.gravityScale);
     }
 
     private Vector2 Walk(Vector2 dir)
