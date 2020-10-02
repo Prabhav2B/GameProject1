@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -8508,12 +8508,11 @@ GameObject:
   m_Component:
   - component: {fileID: 655241615}
   - component: {fileID: 655241618}
-  - component: {fileID: 655241617}
   - component: {fileID: 655241616}
   m_Layer: 0
   m_Name: ReflectionTexCam
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -8525,7 +8524,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 655241614}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.61, y: -10.96, z: -5}
+  m_LocalPosition: {x: 0.8, y: -10.55, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 911193998}
@@ -8562,14 +8561,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!81 &655241617
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 655241614}
-  m_Enabled: 1
 --- !u!20 &655241618
 Camera:
   m_ObjectHideFlags: 0
@@ -12376,7 +12367,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1.56
   m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: f37964d400000000
+  m_ApplyToSortingLayers: f37964d4
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0
@@ -25426,8 +25417,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1767243250}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.62, y: -17.43, z: 0}
-  m_LocalScale: {x: 3.6304915, y: 5.4697976, z: 1}
+  m_LocalPosition: {x: 8.081, y: -16.145, z: 0}
+  m_LocalScale: {x: 3.5594578, y: 4.8561263, z: 1}
   m_Children:
   - {fileID: 719134413}
   m_Father: {fileID: 1341418987}
@@ -25451,7 +25442,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0a6ea579ebfad754681c206be34b8ace, type: 2}
+  - {fileID: 2100000, guid: 23b2911dec0f2dd4686488b86145a9b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
