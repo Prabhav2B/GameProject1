@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WaterReflectionMat
+  m_Name: WaterReflectionMat green
   m_Shader: {fileID: -6465566751694194690, guid: 4db36e1507bebfb4d8add2276c28e39c,
     type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
@@ -25,7 +25,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_B6485698:
-        m_Texture: {fileID: 2800000, guid: 5ed529fdb61ffcb49a4406d947abebd9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6dda8067840171a498f71026094b4845, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlphaTex:
@@ -49,7 +49,7 @@ Material:
     - Vector1_B2C58542: 0.05
     - _EnableExternalAlpha: 0
     m_Colors:
-    - Color_9A73EBD: {r: 0.83766466, g: 0.9770025, b: 0.9811321, a: 0.79607844}
+    - Color_9A73EBD: {r: 0.7311321, g: 1, b: 0.78661275, a: 0.85882354}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
