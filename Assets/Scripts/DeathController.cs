@@ -10,6 +10,24 @@ public class DeathController : MonoBehaviour
     public delegate void deathDel();
     public event deathDel OnDeath;
 
+    void FixedUpdate()
+    {
+        RaycastHit2D hit;
+        if (Physics2D.CircleCast(this.transform.position, .5f, Vector2.down, .1f))
+        {
+            hit = Physics2D.CircleCast(this.transform.position, .5f, Vector2.down, .1f);
+
+            if (hit.collider.gameObject.layer == 11)
+            {
+                if (this.GetComponent<Rigidbody2D>().velocity.y < -1f)
+                {
+                    this.transform.position = RespawnTransform.position;
+                    OnDeath();
+                }
+            }
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == killPlayerLayer)
@@ -17,6 +35,8 @@ public class DeathController : MonoBehaviour
             this.transform.position = RespawnTransform.position;
             OnDeath();
         }
+
+        
     }
 
 }
