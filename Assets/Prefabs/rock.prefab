@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 9111287920106783102}
   - component: {fileID: 8184279375286031028}
   - component: {fileID: 3604370574140799849}
+  - component: {fileID: -7865963126867243907}
   m_Layer: 0
   m_Name: rock
   m_TagString: Untagged
@@ -183,3 +184,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-7865963126867243907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9111287920106783103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6538c8e5d989faa4f8da9c92c8281d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dc: {fileID: 0}
