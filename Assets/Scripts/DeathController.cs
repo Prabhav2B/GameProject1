@@ -35,8 +35,6 @@ public class DeathController : MonoBehaviour
             this.transform.position = RespawnTransform.position;
             OnDeath();
         }
-
-        
     }
 
 }
