@@ -16,7 +16,7 @@ TagManager:
   - Player
   - KillPlayer
   - RespawnPoint
-  - Water
+  - WaterCollider
   - 
   - 
   - 

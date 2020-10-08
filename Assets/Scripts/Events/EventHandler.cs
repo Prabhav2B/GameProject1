@@ -17,6 +17,18 @@ public class EventHandler : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 8)
+        {
+
+            foreach (var ev in PassiveEvents)
+            {
+                ev.OnEvent();
+            }
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 8)
@@ -30,9 +42,26 @@ public class EventHandler : MonoBehaviour
                 }
             }
 
+            //foreach (var ev in PassiveEvents)
+            //{
+            //    ev.OnEvent();
+            //}
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 8)
+        {
+
+            foreach (var ev in ActiveEvents)
+            {
+                ev.OnEventExit();
+            }
+
             foreach (var ev in PassiveEvents)
             {
-                ev.OnEvent();
+                ev.OnEventExit();
             }
         }
     }
