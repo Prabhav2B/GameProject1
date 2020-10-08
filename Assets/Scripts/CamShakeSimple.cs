@@ -89,7 +89,7 @@ public class CamShakeSimple : TriggeredEvent
 
     void TriggerShake()
     {
-		ShakeCamera(.2f);
+		ShakeCamera(1f);
 
     }
 
