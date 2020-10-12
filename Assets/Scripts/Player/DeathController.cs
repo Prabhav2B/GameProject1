@@ -4,6 +4,7 @@ public class DeathController : MonoBehaviour
 {
     [SerializeField] private Transform respawnTransform;
     [SerializeField] int killPlayerLayer = 9;
+    [SerializeField] GameObject player;
 
     public Transform RespawnTransform { private get { return respawnTransform; } set { respawnTransform = value; } }
     
@@ -31,7 +32,7 @@ public class DeathController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == killPlayerLayer)
-        {
+        { 
             this.transform.position = RespawnTransform.position;
             OnDeath();
         }
