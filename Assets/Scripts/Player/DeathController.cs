@@ -43,9 +43,17 @@ public class DeathController : MonoBehaviour
         if (collision.gameObject.layer == killPlayerLayer)
         {
             OnDeath();
-
-            this.transform.position = RespawnTransform.position;
+            this.GetComponentInChildren<SpriteRenderer>().enabled = false;
+            Invoke("ResetPlayerPosition", 2f);
         }
+    }
+
+    void ResetPlayerPosition()
+    {
+        this.GetComponentInChildren<SpriteRenderer>().enabled = true; 
+
+        this.transform.position = RespawnTransform.position;
+
     }
 
     private void DeathParticles()
