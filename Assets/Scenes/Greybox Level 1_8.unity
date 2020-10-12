@@ -2543,6 +2543,7 @@ GameObject:
   - component: {fileID: 186439738}
   - component: {fileID: 186439739}
   - component: {fileID: 186439740}
+  - component: {fileID: 186439741}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2696,6 +2697,20 @@ MonoBehaviour:
   IdleFrequency: 1
   DefaultShakeAmplitude: 0.78
   DefaultShakeFrequency: 10.14
+--- !u!114 &186439741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186439734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c379c3c836a8e498e8639ab5eda557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dc: {fileID: 723254111}
+  camBrain: {fileID: 186439738}
 --- !u!1 &197881233
 GameObject:
   m_ObjectHideFlags: 0
@@ -7421,7 +7436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 561749468}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.827715, y: -12.476001, z: -4.79}
+  m_LocalPosition: {x: -21.826948, y: -12.476001, z: -4.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 338758419}
@@ -9779,9 +9794,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawnTransform: {fileID: 1655494886}
   killPlayerLayer: 9
-  player: {fileID: 0}
-  deathParticles: {fileID: 0}
-  particlesParent: {fileID: 0}
+  player: {fileID: 723254106}
+  deathParticles: {fileID: 2544936328289260181, guid: c816e8f9e4dbc3a40a686bcecd7133a9,
+    type: 3}
+  particlesParent: {fileID: 1875940115}
 --- !u!114 &723254112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25076,6 +25092,36 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.840995, y: 1.7928271}
   m_EdgeRadius: 0
+--- !u!1 &1875940114
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1875940115}
+  m_Layer: 0
+  m_Name: ParticlesParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1875940115
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875940114}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1878185520
 GameObject:
   m_ObjectHideFlags: 0
