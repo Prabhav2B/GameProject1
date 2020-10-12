@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 dir;
+    private Vector2 extForce;
 
     private Vector2 movementTimer;
 
@@ -38,8 +39,10 @@ public class PlayerController : MonoBehaviour
 
         //Subscribing KillVelocity function to OnDeath Event
         dc.OnDeath += KillVelocity;
+        dc.OnDeath += ResetExternalForce;
 
         dir = Vector2.zero;
+        extForce = Vector2.zero;
 
         movementTimer = Vector2.zero;
         previousDir = Vector2.zero;
@@ -123,7 +126,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        rb.velocity = (Walk(dir) * movementSettings.movementSpeed + ApplyGravity()) ;
+        rb.velocity = (Walk(dir) * movementSettings.movementSpeed + ApplyGravity() + extForce) ;
        
     }
 
@@ -149,5 +152,15 @@ public class PlayerController : MonoBehaviour
 
         thisWillFixShit = false; //FIX THIS
     }
-    
+
+    public void ExternalForce(Vector2 force)
+    {
+        extForce = force;
+    }
+
+    public void ResetExternalForce()
+    {
+        extForce = Vector2.zero;
+    }
+
 }
