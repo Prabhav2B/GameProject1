@@ -13,7 +13,7 @@ public class AirColManager : MonoBehaviour
 
     void Start()
     {
-        timer = 0;
+        timer = Random.Range(0f, airTime);
         airColumn = this.GetComponent<AirColumn>();
     }
 
