@@ -93,6 +93,41 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!243 &-1589335179088696534
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Drill
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 5e0180e1892d6874991c29f6a251904b
+  m_Children: []
+  m_Volume: 3b1a3795c159525459409ec2bf8fa2ec
+  m_Pitch: 0b5da2cf205a4394994b9bad62d31547
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -1058064325056761937}
+  - {fileID: 4898516655679022150}
+  - {fileID: 4133946173325344215}
+  m_UserColorIndex: 5
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &-1058064325056761937
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 4052895447c73e14bb08242eb250960e
+  m_EffectName: Attenuation
+  m_MixLevel: 9d662d0c9f7b0df4eb8b9d5b39182c29
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!241 &24100000
 AudioMixerController:
   m_ObjectHideFlags: 0
@@ -118,6 +153,7 @@ AudioMixerController:
     - d0ae35902def5fa4ca4f1100affc4445
     - 2d2091ff9a6481f448a4d643f430c3e0
     - aa9e1516e2418dc47ac791d62e3c9fcb
+    - 5e0180e1892d6874991c29f6a251904b
     name: Everything
   - guids:
     - 09c3009b18ff63f4d8de37a54ffc3d27
@@ -188,10 +224,13 @@ AudioMixerSnapshotController:
     564798a3a586c7345868fb5a6415ebcc: 60
     066b50459b8357442b326ab2b1568b3d: -10000
     3dfb8f75a116c094da11bd9f398123d7: 0
+    3b1a3795c159525459409ec2bf8fa2ec: -22.71404
     9d8d85464bd78c341887b3e5b333869f: -6.133707
     74dc3da6807080d4b99c11f1e9b851ca: 0.54
     e50af5587bfabf84cb8394e740aab9a4: 1.5
     30c7f859b769f9147be7c08cc2ebd060: -19.928482
+    0b3b38fa40f40be48852ca670164ab47: 2
+    ca6d5d2b5127b4749a0e7aa722a2d32f: 0.124
     2b59bb5b20a0b1741ba673aaa945315a: -8.362404
     c72077ecef76d9046a289c4be4210008: -370
     268adc8eb8c32624e9d00d6b0831ad3a: -313
@@ -309,6 +348,42 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &4133946173325344215
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 416536c304c7f284286f3f41a190dd06
+  m_EffectName: Distortion
+  m_MixLevel: 947d1b30acb3f2a45bb21f80bd9d6be8
+  m_Parameters:
+  - m_ParameterName: Level
+    m_GUID: ca6d5d2b5127b4749a0e7aa722a2d32f
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &4898516655679022150
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 817de15ae8f433941a2fbf307fb9123b
+  m_EffectName: Normalize
+  m_MixLevel: db197c73e936a5841b057fa683c9bcff
+  m_Parameters:
+  - m_ParameterName: Fade in time
+    m_GUID: e91361e4bc3aa064e96b7601e31bbb2b
+  - m_ParameterName: Lowest volume
+    m_GUID: 0be75ca8bcaf80549a163bfe6c6f2f4e
+  - m_ParameterName: Maximum amp
+    m_GUID: 0b3b38fa40f40be48852ca670164ab47
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!243 &5491483307414289381
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -324,7 +399,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 3995796983411868089}
-  m_UserColorIndex: 1
+  m_UserColorIndex: 5
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
@@ -343,7 +418,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 7489522500334746708}
-  m_UserColorIndex: 5
+  m_UserColorIndex: 1
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
@@ -401,6 +476,7 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: -2802569712275597678}
   - {fileID: 5491483307414289381}
+  - {fileID: -1589335179088696534}
   m_Volume: c01fb0b7ff981ba41a1810026bfb111f
   m_Pitch: a7dde646857c1a541a6d4d0c81a046b3
   m_Send: 00000000000000000000000000000000

@@ -3,25 +3,34 @@ using UnityEngine;
 
 public class EventHandler : MonoBehaviour
 {
+    [SerializeField] DeathController dc;
+    [SerializeField] GameObject idleDrill;
+    [SerializeField] GameObject animatedDrill;
+    [SerializeField] GameObject sparks;
+
     [SerializeField] List<TriggeredEvent> PassiveEvents;
     [SerializeField] List<TriggeredEvent> ActiveEvents;
 
-    bool hasActivated = false;
+    float drillTimer;
+    float drillTime = 2f;
 
-    private void Update()
+    bool hastriggered = false;
+
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            hasActivated = true;
-            Invoke("Deactivate", .1f);
-        }
+        idleDrill.SetActive(true);
+        animatedDrill.SetActive(false);
+        sparks.SetActive(false);
+
+        dc.OnDeath += ResetDrill;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+       
         if (collision.gameObject.layer == 8)
         {
-
+            drillTimer = 0f;
             foreach (var ev in PassiveEvents)
             {
                 ev.OnEvent();
@@ -33,27 +42,35 @@ public class EventHandler : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            if (hasActivated)
+            if (drillTimer >= drillTime && !hastriggered)
             {
-                hasActivated = false;
+                hastriggered = true;
+                drillTimer = 0f;
+
+                idleDrill.SetActive(false);
+                animatedDrill.SetActive(true);
+                sparks.SetActive(true);
+
                 foreach (var ev in ActiveEvents)
                 {
                     ev.OnEvent();
                 }
             }
-
-            //foreach (var ev in PassiveEvents)
-            //{
-            //    ev.OnEvent();
-            //}
+            else
+            {
+                drillTimer += Time.deltaTime;
+            }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        idleDrill.SetActive(true);
+        animatedDrill.SetActive(false);
+        sparks.SetActive(false);
         if (collision.gameObject.layer == 8)
         {
-
+            drillTimer = 0f;
             foreach (var ev in ActiveEvents)
             {
                 ev.OnEventExit();
@@ -66,16 +83,21 @@ public class EventHandler : MonoBehaviour
         }
     }
 
+    void ResetDrill()
+    {
+        hastriggered = false;
+
+        idleDrill.SetActive(true);
+        animatedDrill.SetActive(false);
+        sparks.SetActive(false);
+
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(this.transform.position + new Vector3(this.GetComponent<CircleCollider2D>().offset.x, 
             this.GetComponent<CircleCollider2D>().offset.y, 0),
             this.GetComponent<CircleCollider2D>().radius);
-    }
-
-    private void Deactivate()
-    {
-        hasActivated = false;
     }
 }

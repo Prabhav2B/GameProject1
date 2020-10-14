@@ -4,6 +4,7 @@ using UnityEngine;
 public class DrillRocksEvent : TriggeredEvent
 {
     public GameObject RocksParent;
+    [SerializeField] AudioSource au;
 
     List<Rigidbody2D> rocks;
 
@@ -14,6 +15,7 @@ public class DrillRocksEvent : TriggeredEvent
 
     public override void OnEvent()
     {
+        au.Play();
         TriggerRocks();
     }
 

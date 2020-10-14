@@ -12,6 +12,9 @@ public class DrillLightsEvent : TriggeredEvent
     [SerializeField]float haloIntensity = 0.2f;
 
     [SerializeField]float timeToFinish = 0.5f;
+
+    [SerializeField] AudioSource au;
+
     float timer;
 
     private void Start()
@@ -32,12 +35,16 @@ public class DrillLightsEvent : TriggeredEvent
     {
         //turn lights on
         timer = 0;
+        au.loop = true;
+        au.Play();
         StartCoroutine(nameof(LightOn));
+
     }
 
     public override void OnEventExit()
     {
         //turn lights off
+        au.Stop();
         StartCoroutine(nameof(LightOff));
     }
 
