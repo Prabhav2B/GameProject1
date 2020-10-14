@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 9068270761208278346}
   - component: {fileID: 4774961013312725258}
   - component: {fileID: 6528137850160967233}
-  - component: {fileID: 2420811571582470630}
   m_Layer: 0
   m_Name: drip
   m_TagString: Untagged
@@ -4883,11 +4882,11 @@ AudioSource:
   m_GameObject: {fileID: 9068270761208278347}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: c1910d9a182378b4496202c410f62860,
+  OutputAudioMixerGroup: {fileID: -2802569712275597678, guid: c1910d9a182378b4496202c410f62860,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 8ccbc3da443022e45a2f27ab204c2626, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.024
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4987,29 +4986,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f495106776da1694f9df0d070e2e9c4b, type: 3}
   - {fileID: 8300000, guid: 5173bbd5d1beef74db124a4885aaa93c, type: 3}
   - {fileID: 8300000, guid: 47b5842b8a6745e43a5a8dbc0b39f99c, type: 3}
---- !u!164 &2420811571582470630
-AudioReverbFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9068270761208278347}
-  m_Enabled: 1
-  m_DryLevel: 0
-  m_Room: -1000
-  m_RoomHF: -300
-  m_DecayTime: 2.31
-  m_DecayHFRatio: 0.64
-  m_ReflectionsLevel: -711
-  m_ReverbLevel: 83
-  m_ReverbDelay: 0.017
-  m_Diffusion: 100
-  m_Density: 100
-  m_HFReference: 5000
-  m_RoomLF: 0
-  m_LFReference: 250
-  m_ReflectionsDelay: 0
-  m_ReverbPreset: 6
 --- !u!1 &9068270761780758773
 GameObject:
   m_ObjectHideFlags: 0
