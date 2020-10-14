@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -15229,11 +15229,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: steamjet
       objectReference: {fileID: 0}
-    - target: {fileID: 7544424337138728373, guid: 51cf1b31eab93f0499df9f8d8342bb01,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51cf1b31eab93f0499df9f8d8342bb01, type: 3}
 --- !u!1 &995893738
@@ -23019,6 +23014,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: background sky out
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542690366298506184, guid: 39d7ab6e74066e845b101c6df675d6bd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8542690366298506198, guid: 39d7ab6e74066e845b101c6df675d6bd,
         type: 3}
@@ -32455,7 +32455,7 @@ PrefabInstance:
     - target: {fileID: 5281704487370285343, guid: ff7d3186b9df0134c8f1bc7be1287610,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.672653
+      value: 17.675411
       objectReference: {fileID: 0}
     - target: {fileID: 5281704487370285343, guid: ff7d3186b9df0134c8f1bc7be1287610,
         type: 3}
