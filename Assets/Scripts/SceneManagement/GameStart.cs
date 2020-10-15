@@ -70,6 +70,7 @@ public class GameStart : MonoBehaviour
 
         }
         pc.enabled = true;
+        this.enabled = false;
         yield return null;
     }
 
@@ -95,8 +96,6 @@ public class GameStart : MonoBehaviour
 
             timerBeam += Time.time - lastFrame;
             lastFrame = Time.time;
-
-            Debug.Log(timerBeam / timeToFinishLightBeam);
 
             yield return new WaitForSeconds(.0167f);
 
