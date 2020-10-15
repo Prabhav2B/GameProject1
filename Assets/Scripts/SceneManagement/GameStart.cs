@@ -21,6 +21,9 @@ public class GameStart : MonoBehaviour
     float timerBeam = 0;
     bool lockThis = false;
 
+    [SerializeField] AudioSource chords;
+    [SerializeField] AudioSource melody;
+
     private void Start()
     {
         pc.enabled = false;
@@ -34,6 +37,8 @@ public class GameStart : MonoBehaviour
             lightIntensities[i++] = light.intensity;
             light.intensity = 0f;
         }
+
+        Invoke(nameof(PlayStartMusic), 3f);
         
     }
 
@@ -45,6 +50,12 @@ public class GameStart : MonoBehaviour
             StartCoroutine(nameof(LightOff));
             
         }
+    }
+
+    private void PlayStartMusic()
+    {
+        chords.Play();
+        melody.Play();
     }
 
     IEnumerator LightOn()
