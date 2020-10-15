@@ -31,8 +31,10 @@ public class DeathController : MonoBehaviour
             {
                 if (this.GetComponent<Rigidbody2D>().velocity.y < -1f)
                 {
-                    this.transform.position = RespawnTransform.position;
                     OnDeath();
+                    this.GetComponentInChildren<SpriteRenderer>().enabled = false;
+                    this.GetComponent<PlayerController>().enabled = false;
+                    Invoke("ResetPlayerPosition", 2f);
                 }
             }
         }
@@ -44,14 +46,15 @@ public class DeathController : MonoBehaviour
         {
             OnDeath();
             this.GetComponentInChildren<SpriteRenderer>().enabled = false;
+            this.GetComponent<PlayerController>().enabled = false;
             Invoke("ResetPlayerPosition", 2f);
         }
     }
 
     void ResetPlayerPosition()
     {
-        this.GetComponentInChildren<SpriteRenderer>().enabled = true; 
-
+        this.GetComponentInChildren<SpriteRenderer>().enabled = true;
+        this.GetComponent<PlayerController>().enabled = true;
         this.transform.position = RespawnTransform.position;
 
     }
