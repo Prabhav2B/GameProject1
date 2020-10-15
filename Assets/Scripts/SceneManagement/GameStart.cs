@@ -38,7 +38,7 @@ public class GameStart : MonoBehaviour
             light.intensity = 0f;
         }
 
-        Invoke(nameof(PlayStartMusic), 3f);
+        Invoke(nameof(PlayStartMusic), 1.5f);
         
     }
 
