@@ -8,6 +8,7 @@ public class DeathController : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameObject deathParticles;
     [SerializeField] Transform particlesParent;
+    [SerializeField] AudioSource deathSound;
 
 
     public Transform RespawnTransform { private get { return respawnTransform; } set { respawnTransform = value; } }
@@ -18,6 +19,7 @@ public class DeathController : MonoBehaviour
     private void Start()
     {
         OnDeath += DeathParticles;
+        OnDeath += DeathSound;
     }
 
     void FixedUpdate()
@@ -64,6 +66,11 @@ public class DeathController : MonoBehaviour
         GameObject go = Instantiate(deathParticles, this.transform.position, Quaternion.identity);
         go.transform.parent = particlesParent;
         Destroy(go, 1f);
+    }
+
+    private void DeathSound()
+    {
+        deathSound.Play();
     }
 
 
