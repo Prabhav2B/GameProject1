@@ -21,7 +21,6 @@ public class GameEnd : MonoBehaviour
     [SerializeField] Text endText;
 
     Rigidbody2D rb;
-    [SerializeField]CinemachineVirtualCamera vCam;
 
     private void Start()
     {
@@ -42,7 +41,6 @@ public class GameEnd : MonoBehaviour
         rb = pc.GetComponent<Rigidbody2D>();
         restPos = pc.transform.position;
         pc.enabled = false;
-        vCam.gameObject.SetActive(true);
 
         StartCoroutine(nameof(Rest));
         StartCoroutine(nameof(LightOff));
