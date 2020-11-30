@@ -21,6 +21,7 @@ public class GameEnd : MonoBehaviour
     [SerializeField] Text endText;
 
     Rigidbody2D rb;
+    Color c;
 
     private void Start()
     {
@@ -33,6 +34,8 @@ public class GameEnd : MonoBehaviour
         {
             lightIntensities[i++] = light.intensity;
         }
+
+        c = endText.color;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -81,7 +84,7 @@ public class GameEnd : MonoBehaviour
 
             lights[0].intensity = Mathf.Lerp(lightIntensities[0], 0f, timer / timeToFinish);
             lights[1].intensity = Mathf.Lerp(lightIntensities[1], 0f, timer / timeToFinish);
-            endText.color = new Color(.85f, .85f, .85f, Mathf.Lerp(0f, 1f, timer / timeToFinish));
+            endText.color = new Color(c.r, c.g, c.b, Mathf.Lerp(0f, 1f, timer / timeToFinish));
 
             timer += Time.time - lastFrame;
             lastFrame = Time.time;
